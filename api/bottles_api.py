@@ -25,7 +25,8 @@ def create_bottle():
     res = bottles_col.document().set(bottle.to_json())
     print(str(res))
 
-    return bottle.to_json()
+    # return bottle.to_json()
+    return "Bottle created"
 
 
 # Todo: Implement list
@@ -38,7 +39,7 @@ def list_bottles():
         'price', direction='DESCENDING').stream()
     results = [bottles.to_dict() for bottles in bottles_query]
 
-    bottles_list = [[bottle['name'], bottle['price']]
+    bottles_list = [[bottle['name'], f'{bottle["currency"]}{bottle["price"]}']
                     for bottle in results]
 
     return str(bottles_list)
@@ -52,12 +53,9 @@ def get_bottle(bottle_id: str):
     Get bottle details by id
     """
 
-    # bottle_ref = db.collection('bottles').document(id)
+    bottle = bottles_col.document(bottle_id).get()
 
-    # bottle_ref.get()
-
-    # return jsonify(bottle_ref.get())
-    return example_bottle
+    return bottle.to_dict()
 
 
 # Todo: Implement update
@@ -68,23 +66,21 @@ def update_bottle(bottle_id: str):
     """
     data = request.json
 
-    bottle = Bottle(data['id'], data['name'], data['special'],
-                    data['description'], data['abv'], data['price'], data['attributes'], data['recommended'], data['whiskey_exchange_url'], data['image_url'])
+    bottle = bottleFromRequest(data=data)
 
-    bottle_ref = db.collection('bottles').document(id)
+    res = bottles_col.document(bottle_id).set(bottle.to_json())
+    print(str(res))
 
-    bottle_ref.set(bottle)  # overwrite existing bottle with new data
-
-    return jsonify(bottle)
+    return bottle.to_json()
 
 
 # Todo: Implement delete
 @bottles_api.route(BOTTLE_ROUTES['delete'].path, methods=BOTTLE_ROUTES['delete'].methods)
-def delete_bottle(id: str):
+def delete_bottle(bottle_id: str):
     """
     Delete a bottle from the database by id
     """
-    bottles_col.document(id).delete()
+    bottles_col.document(bottle_id).delete()
     print("Bottle deleted")
 
-    return True
+    return "Bottle deleted"

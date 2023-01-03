@@ -12,12 +12,24 @@ class Bottle:
     special: str
     description: str
     abv: str
-    price: str
+    currency: str
+    price: float
     attributes: dict
     recommended: list[str]
     whiskey_exchange_url: str
     image_url: str
     # Add more properties here...
+
+    @staticmethod
+    def bottleFromRequest(data: any):
+        '''Converts bottle into JSON object'''
+
+        if not data["id"]:
+            raise Exception("No ID")
+        id == data["id"]
+
+        return Bottle(data['id'], data['name'], data['special'],
+                      data['description'], data['abv'], data['currency'], data['price'], data['attributes'], data['recommended'], data['whiskey_exchange_url'], data['image_url'])
 
     # You can also add methods
 
@@ -35,8 +47,8 @@ class Bottle:
             "special": self.special,
             "description": self.description,
             "abv": self.abv,
-            "currency": self.price[0],
-            "price": self.price[1:],
+            "currency": self.currency,
+            "price": self.price,
             "attributes": self.attributes,
             "recommended": self.recommended,
             "whiskey_exchange_url": self.whiskey_exchange_url,

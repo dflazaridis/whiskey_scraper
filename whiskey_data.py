@@ -15,8 +15,8 @@ def get_first_bottle_url(driver):
     return url
 
 
-# Function that gathers all whiskey URLs on given pages, iterates through them and grabs attributes
 def scrape_whiskey_data_url(driver, whiskeys, url, count=300):
+    '''# Function that gathers all whiskey URLs on given pages, iterates through them and grabs attributes'''
     print("Count is: " + str(len(whiskeys.keys())))
 
     if len(whiskeys.keys()) >= count:
