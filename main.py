@@ -1,9 +1,7 @@
-from whiskey_data import get_first_bottle_url, scrape_whiskey_data_url, read_whiskey_json, output_whiskey_to_json
+from whiskey_scraper import get_first_bottle_url, scrape_whiskey_data_url, read_whiskey_json, output_whiskey_to_json
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
-from api import create_app
-from api.bottles_api import bottles_api, create_bottle
 
 
 def get_driver():
@@ -13,13 +11,13 @@ def get_driver():
     return webdriver.Chrome(service=service, options=options)
 
 
-def main(count=300):
+def main(count=5):
 
     # get driver as chromedriver
     driver = get_driver()
 
     whiskeys = {}
-    whiskeys = read_whiskey_json(whiskeys)
+    # whiskeys = read_whiskey_json(whiskeys)
 
     first_whiskey_url = get_first_bottle_url(driver)
 

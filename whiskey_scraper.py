@@ -1,7 +1,6 @@
 import re
 import json
 from selenium.webdriver.common.by import By
-# from api import create_new_whiskey
 
 ALLOWED_CATEGORIES = ["Scotch Whisky", "World Whisky"]
 
@@ -31,7 +30,6 @@ def scrape_whiskey_data_url(driver, whiskeys, url, count=300):
         return whiskeys
 
     whiskeys[url] = whiskey
-    # output_whiskey_to_json(whiskeys)
 
     for url in whiskey["recommended"]:
         if len(whiskeys.keys()) >= count:

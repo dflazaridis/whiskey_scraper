@@ -1,5 +1,2 @@
 config/*
 __pycache__
-single_malts.json
-api_old.py
-example.py
