@@ -1,6 +1,7 @@
 import re
 import json
 from selenium.webdriver.common.by import By
+from api import create_new_bottle
 
 ALLOWED_CATEGORIES = ["Scotch Whisky", "World Whisky"]
 
@@ -15,7 +16,7 @@ def get_first_bottle_url(driver):
 
 
 def scrape_whiskey_data_url(driver, whiskeys, url, count=300):
-    '''# Function that gathers all whiskey URLs on given pages, iterates through them and grabs attributes'''
+    '''Function that gathers all whiskey URLs on given pages, iterates through them and grabs attributes'''
     print("Count is: " + str(len(whiskeys.keys())))
 
     if len(whiskeys.keys()) >= count:
@@ -30,6 +31,9 @@ def scrape_whiskey_data_url(driver, whiskeys, url, count=300):
         return whiskeys
 
     whiskeys[url] = whiskey
+
+    '''pass whiskey bottle into API'''
+    create_new_bottle(whiskey)
 
     for url in whiskey["recommended"]:
         if len(whiskeys.keys()) >= count:
@@ -66,7 +70,6 @@ def get_whiskey_name(driver):
     return {"name": name, "special": special}
 
 
-# returns the type of alcohol
 def get_alcohol_category(driver):
 
     category = None
@@ -268,15 +271,9 @@ def get_recommended_urls(driver):
     return recommended_url_list[::-1]
 
 
-'''Output whiskeys dict to JSON'''
-
-
 def output_whiskey_to_json(whiskeys):
     with open('single_malts.json', 'w') as f:
         json.dump(whiskeys, f)
-
-
-'''Read in whiskey to JSON object to python'''
 
 
 def read_whiskey_json(whiskeys):

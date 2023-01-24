@@ -11,16 +11,18 @@ def get_driver():
     return webdriver.Chrome(service=service, options=options)
 
 
-def main(count=5):
+def main(count=10):
 
-    # get driver as chromedriver
+    # start instance of chromedriver
     driver = get_driver()
 
     whiskeys = {}
     # whiskeys = read_whiskey_json(whiskeys)
 
+    # gather url of first bottle of whiskey
     first_whiskey_url = get_first_bottle_url(driver)
 
+    # gather attributes from whiskey bottles starting from url obtained above
     whiskeys = scrape_whiskey_data_url(
         driver, whiskeys, first_whiskey_url, count)
 
@@ -31,7 +33,7 @@ def main(count=5):
     return whiskeys
 
 
-main(count=10)
+main(count=5)
 
 # app = create_app()
 
