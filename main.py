@@ -11,7 +11,7 @@ def get_driver():
     return webdriver.Chrome(service=service, options=options)
 
 
-def main(count=10):
+def main(count=1):
 
     # start instance of chromedriver
     driver = get_driver()
@@ -33,7 +33,7 @@ def main(count=10):
     return whiskeys
 
 
-main(count=5)
+main(count=3)
 
 # app = create_app()
 
